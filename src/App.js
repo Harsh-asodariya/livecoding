@@ -1,23 +1,53 @@
-import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
 
+
 function App() {
+  const like = 100
+  const dislike = 25
+  const [liked,setliked] = useState(false)
+  const [disliked,setDisliked] = useState(false)
+  const [likes, setlikes] = useState(like)
+  const [dislikes, setDislikes] = useState(dislike)
+  const likeHandler = () => {
+    if(liked){
+      setliked(false)
+      setlikes(likes - 1)
+    }else{
+      setliked(true)
+      setDisliked(false)
+      if(disliked === true){
+        setDislikes(dislikes - 1)
+      }
+      setlikes(likes + 1)
+    }
+  }
+  const dislikeHandler =() => {
+    if(disliked){
+      setDisliked(false)
+      setDislikes(dislikes - 1)
+    }else{
+      setDisliked(true)
+      setliked(false)
+      if(liked === true){
+        setlikes(likes - 1)
+      }
+      setDislikes(dislikes + 1)
+    }
+  }
+  let likeclass = 'like-button'
+  let dislikeclass = 'dislike-button'
+  if(liked){
+    likeclass = likeclass + ' liked'
+  
+  }
+  if(disliked){
+    dislikeclass = dislikeclass + ' disliked'
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <button className={likeclass} onClick={likeHandler}>like |<span className='likes-counter'> {likes}</span></button>
+      <button className={dislikeclass} onClick={dislikeHandler}>dislike |<span className='dislikes-counter'> {dislikes}</span></button>
     </div>
   );
 }
